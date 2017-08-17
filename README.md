@@ -1,24 +1,25 @@
-azure-scripty
+azure-scripty-cli2
 ===============
 
 Azure automation made easy. 
 
-[![Build Status](https://travis-ci.org/WindowsAzure-Contrib/azure-scripty.png)](https://travis-ci.org/WindowsAzure-Contrib/azure-scripty)
 
 
-azure-scripty is a little helper library that makes it really easy to create node automation scripts using the azure-cli.
+azure-scripty-cli2-cli2 is a little helper library that makes it really easy to create node automation scripts using the azure-cli version2.
 
 # Features
-* Invoke one or more CLI commands easily from within your code.
-* Supports all CLI commands, if you know the CLI you know scripty!
+* Invoke one or more CLI2 commands easily from within your code.
+* Supports all CLI2 commands, if you know the CLI2 you know scripty!
 * Returns JSON objects from each cmd. Useful for complex scripting scenarios.
 * Cross platform, works on Windows, Mac and Linux.
 
-# Getting started
+# Getting started - Before Installing
+
+You must install Azure CLI Version - 2 before installing azure-scripty-cli2 Install CLI as specified here https://docs.microsoft.com/en-us/cli/azure/install-azure-cli
 
 ## Install it
 ```bash
-npm install azure-scripty
+npm install azure-scripty-cli2
 ```
 
 To use scripty, call the invoke method passing in one or more commands. Commands are the arguments that you would normally pass when calling azure-cli from the shell.
@@ -28,7 +29,7 @@ To use scripty, call the invoke method passing in one or more commands. Commands
 You can pass a single command to scripty along with a callback.
 
 ```javascript
-var scripty = require('azure-scripty');
+var scripty = require('azure-scripty-cli2');
 scripty.invoke('site list', function(err, results) {
   console.log("my sites\n" + results);
 });
@@ -39,7 +40,7 @@ scripty.invoke('site list', function(err, results) {
 By default scripty uses the standard default buffer size of 204800 bytes. This may be insufficent for some scenarios like listing out hundreds of blobs resulting an error indicating the buffer size is too small. For these cases you can increase the buffer size using by setting maxBuffer.
 
 ```
-var scripty = require('azure-scripty');
+var scripty = require('azure-scripty-cli2');
 scripty.maxBuffer = 999999999;
 ```
 
@@ -56,7 +57,7 @@ You can also pass a command object where properties map to different parameters.
 For example passing the command below
 
 ```javascript
-var scripty = require('azure-scripty');
+var scripty = require('azure-scripty-cli2');
 cmd = {
   command: 'mobile create',
   positional: ['mymobileservice', 'sqladmin', 'myP@ssw0rd!'],
@@ -76,7 +77,7 @@ mobile create mymobileserver sqladmin myP@ssw0rd! --sqlServer VMF1ASD --sqlDb my
 You can pass a collection of cmds to be called in sequence. Below for example I am create a site and then configuring it.
 
 ```javascript
-var scripty = require('azure-scripty');
+var scripty = require('azure-scripty-cli2');
 scripty.invoke(['site create mysite --git', 'site config add foo=bar', 'site show mysite'], function(err, results){
   console.log(results[2]) //shows the site details
 });
@@ -89,7 +90,7 @@ The results parameter in the callback will contain an array of all returned obje
 Similar to the single command, you can also pass multiple command objects. See the example below.
 
 ```javascript
-var scripty = require('azure-scripty');
+var scripty = require('azure-scripty-cli2');
 cmds = [
   {
     command: 'mobile create',
@@ -121,7 +122,7 @@ site create site1 --location "West US" --subscription foobar --git
 An alternative style that is supported is to pass a collection of cmd objects with callbacks. This is useful for performing actions after a step like logging. You can do much more in the callback which will be covered in the section on piping under the topic "Custom logic, filters, and transformations"
 
 ```javascript
-var scripty = require('azure-scripty');
+var scripty = require('azure-scripty-cli2');
 var steps={
   sites:function(callback,result) {
     //contains just sites
@@ -159,7 +160,7 @@ If a command to be piped into is immediately after a command returning a collect
 For example in the example below the :Name property is specified for 'site stop'. Assuming 'site list' returns 2 sites 'foo' and 'bar' then 'site stop foo' and 'site stop bar' will be called.
 
 ```javascript
-var scripty = require('azure-scripty');
+var scripty = require('azure-scripty-cli2');
 scripty.invoke(['site list', 'site stop :name'], function(){});
 ```
 
@@ -170,7 +171,7 @@ You can also pipe a result which is not a collection to the next call.
 Below the first call retrieves the Service Bus namespace myns and then pipes the connection string to a config setting.
 
 ```javascript
-var scripty = require('azure-scripty')
+var scripty = require('azure-scripty-cli2')
 scripty.invoke(['sb namespace show myns', "site config add \"conn=':ConnectionString'\" mysite"], 
   function(){});
 ```
@@ -179,7 +180,7 @@ scripty.invoke(['sb namespace show myns', "site config add \"conn=':ConnectionSt
 scripty supports the ability to apply custom filtering logic with piping. We can modify the earlier site example to only stop web sites in "West US". To do this you simply filter the list of websites with custom logic in the callback for the step where the sites are returned. You can see this below.
 
 ```javascript
-var scripty =  require('azure-scripty');
+var scripty =  require('azure-scripty-cli2');
 var steps={
   sites:function(callback,result) {
     //apply a filter

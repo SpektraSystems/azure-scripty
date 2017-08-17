@@ -1,8 +1,8 @@
 {
-  "name": "azure-scripty",
-  "version": "1.0.0",
-  "description": "Azure automation made easy",
-  "main": "lib/azure-scripty.js",
+  "name": "azure-scripty-cli2",
+  "version": "1.1.0",
+  "description": "Azure automation made easy with Cli2.0",
+  "main": "lib/azure-scripty-cli2.js",
   "licenses": [
     {
       "type": "Apache",
@@ -10,7 +10,6 @@
     }
   ],
   "dependencies": {
-    "azure-cli": "latest",
     "underscore": "~1.4.3",
     "async": "~0.2.10"
   },
@@ -29,9 +28,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/windowsazure-contrib/azure-scripty.git"
+    "url": "git://github.com/SpektraSystems/azure-scripty-cli2.git"
   },
-  "homepage": "https://github.com/windowsazure-contrib/azure-scripty",
+  "homepage": "https://github.com/SpektraSystems/azure-scripty-cli2.git",
   "keywords": [
     "azure",
     "cloud",
